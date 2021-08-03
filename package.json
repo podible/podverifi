@@ -6,9 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --fix",
+    "lint": "next lint",
+    "lint:write": "next lint --cache --fix",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "postinstall": "husky install",
     "prepare": "husky install"
   },
   "dependencies": {
