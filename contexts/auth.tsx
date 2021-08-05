@@ -1,13 +1,15 @@
 import React from "react";
-import { CognitoUserExt } from "../utils/types";
+import { CognitoUserExt } from "../utils/auth";
 import useAuth from "../utils/useAuth";
 
 const AuthContext = React.createContext<{
   loading: boolean;
-  data: CognitoUserExt | null;
-}>({ loading: false, data: null });
+  user: CognitoUserExt | null;
+}>({ loading: false, user: null });
+
 export const useAuthCtx = () => React.useContext(AuthContext);
+
 export const AmplifyAuthProvider: React.FC = ({ children }) => {
-  const { data, loading } = useAuth();
-  return <AuthContext.Provider value={{ data, loading }}>{children}</AuthContext.Provider>;
+  const { user, loading } = useAuth();
+  return <AuthContext.Provider value={{ user, loading }}>{children}</AuthContext.Provider>;
 };
