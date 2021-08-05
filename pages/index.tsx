@@ -1,10 +1,12 @@
+import React from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { Auth } from "aws-amplify";
+import useAuth from "../utils/useAuth";
 
 export default function Home() {
-  let something = "hello";
-  console.log("hello there");
-
+  const { user, loading } = useAuth();
+  console.log(user, loading);
   return (
     <div className={styles.container}>
       <Head>
@@ -17,6 +19,29 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+        {loading && <p className={styles.loading}>Loading...</p>}
+
+        {!user && (
+          <button
+            onClick={() => {
+              Auth.federatedSignIn();
+            }}
+          >
+            Login
+          </button>
+        )}
+        {user && !loading && (
+          <>
+            {user.attributes.email}
+            <button
+              onClick={() => {
+                Auth.signOut();
+              }}
+            >
+              Logout
+            </button>
+          </>
+        )}
       </main>
 
       <footer className={styles.footer}>
